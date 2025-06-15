@@ -1,26 +1,26 @@
 # DigitalOcean App Platform Configuration
 name: reform-construction
-services:
-- name: web
-  source_dir: /
-  github:
-    repo: your-username/reform-construction
-    branch: main
-  run_command: npm run build
-  environment_slug: node-js
-  instance_count: 1
-  instance_size_slug: basic-xxs
-  http_port: 8080
-  routes:
-  - path: /
-  static_sites:
+static_sites:
   - name: frontend
     source_dir: /
     github:
       repo: your-username/reform-construction
       branch: main
-    build_command: npm run build
+      deploy_on_push: true
+    build_command: npm install --include=dev && npx vite build
     output_dir: /dist
     environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
     routes:
-    - path: /
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+        type: GENERAL
+      - key: DISABLE_ESLINT_PLUGIN
+        value: "true"
+        type: GENERAL
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=2048"
+        type: GENERAL

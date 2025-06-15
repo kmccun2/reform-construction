@@ -18,7 +18,7 @@ export const isGoogleSheetsConfigured = () => {
 export const sendToGoogleSheetsViaIframe = (formData) => {
   return new Promise((resolve, reject) => {
     const googleSheetsUrl = import.meta.env.VITE_GOOGLE_SHEETS_URL;
-    
+
     if (!googleSheetsUrl) {
       reject(new Error('Google Sheets URL not configured'));
       return;
@@ -106,7 +106,7 @@ export const sendToGoogleSheetsViaIframe = (formData) => {
 export const sendToGoogleSheetsCorsFree = (formData) => {
   return new Promise((resolve, reject) => {
     const googleSheetsUrl = import.meta.env.VITE_GOOGLE_SHEETS_URL;
-    
+
     if (!googleSheetsUrl) {
       reject(new Error('Google Sheets URL not configured'));
       return;
@@ -115,7 +115,7 @@ export const sendToGoogleSheetsCorsFree = (formData) => {
     try {
       // Create callback function name
       const callbackName = `googleSheetsCallback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       // Set up global callback
       window[callbackName] = (result) => {
         cleanup();
@@ -174,7 +174,7 @@ export const sendToGoogleSheetsCorsFree = (formData) => {
 export const sendToGoogleSheetsViaParams = (formData) => {
   return new Promise((resolve, reject) => {
     const googleSheetsUrl = import.meta.env.VITE_GOOGLE_SHEETS_URL;
-    
+
     if (!googleSheetsUrl) {
       reject(new Error('Google Sheets URL not configured'));
       return;
@@ -193,13 +193,12 @@ export const sendToGoogleSheetsViaParams = (formData) => {
         method: 'GET',
         mode: 'no-cors'
       })
-      .then(() => {
-        resolve({ success: true, method: 'get-params' });
-      })
-      .catch((error) => {
-        // no-cors mode doesn't provide meaningful error info
-        resolve({ success: true, method: 'get-params' }); // Assume success
-      });
+        .then(() => {
+          resolve({ success: true, method: 'get-params' });
+        }).catch(() => {
+          // no-cors mode doesn't provide meaningful error info
+          resolve({ success: true, method: 'get-params' }); // Assume success
+        });
 
     } catch (error) {
       reject(new Error(`GET params submission error: ${error.message}`));

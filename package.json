@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npx vite build",
+    "build:production": "npx vite build --mode production",
+    "build:simple": "npx vite build",
+    "build:ci": "npm ci --include=dev && npx vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "lint:fix": "eslint . --fix",
+    "preview": "npx vite preview",
     "deploy:build": "npm run build && powershell Compress-Archive -Path 'dist\\*' -DestinationPath 'reform-construction-deploy.zip' -Force",
     "deploy:docker": "docker build -t reform-construction . && docker tag reform-construction your-registry/reform-construction"
   },

@@ -3,10 +3,7 @@ import './App.css';
 import { textContent } from './utils/text-content.js';
 import {
   sendToGoogleSheets,
-  isGoogleSheetsConfigured,
-  sendToGoogleSheetsViaIframe,
-  sendToGoogleSheetsCorsFree,
-  sendToGoogleSheetsViaParams
+  isGoogleSheetsConfigured
 } from './utils/googleSheets.js';
 import rcLogo from './assets/images/rc-logo.png';
 import {
@@ -34,9 +31,9 @@ function App() {
     message: ''
   });
   const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false); const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionComplete, setSubmissionComplete] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [submissionId, setSubmissionId] = useState(null);
 
   // Smooth scroll function that accounts for header height
@@ -166,123 +163,6 @@ function App() {
       }
     } else {
       setErrors(newErrors);
-    }
-  };
-  // Simple diagnostic function to test Google Apps Script
-  const testGoogleScript = async () => {
-    const googleSheetsUrl = import.meta.env.VITE_GOOGLE_SHEETS_URL;
-
-    console.log('🔍 Testing Google Apps Script directly...');
-    console.log('URL:', googleSheetsUrl);
-
-    if (!googleSheetsUrl || googleSheetsUrl === 'your_google_apps_script_web_app_url_here') {
-      alert('❌ Google Sheets URL not configured in .env file!');
-      return;
-    }
-
-    try {
-      // Test 1: Simple GET request with more detailed error handling
-      console.log('Test 1: GET request...');
-
-      try {
-        const getResponse = await fetch(googleSheetsUrl, {
-          method: 'GET',
-          mode: 'cors'
-        });
-
-        console.log('GET Response Status:', getResponse.status);
-        console.log('GET Response OK:', getResponse.ok);
-
-        if (!getResponse.ok) {
-          throw new Error(`HTTP ${getResponse.status}: ${getResponse.statusText}`);
-        }
-
-        const getText = await getResponse.text();
-        console.log('GET Response Text:', getText);
-
-        if (getText.includes('Google Apps Script is working')) {
-          console.log('✅ GET test passed - Google Apps Script is responding');
-        } else {
-          console.warn('⚠️ GET test returned unexpected response');
-        }
-
-      } catch (getError) {
-        console.error('❌ GET test failed:', getError);
-
-        // Provide specific error guidance
-        if (getError.message.includes('Failed to fetch')) {
-          alert(`❌ Connection failed!\n\nThis usually means:\n1. Google Apps Script URL is wrong\n2. Script not deployed as web app\n3. Script permissions not set correctly\n\nCheck TROUBLESHOOTING_NO_DATA.md for detailed fix instructions.`);
-          return;
-        } else if (getError.message.includes('CORS')) {
-          alert(`❌ CORS error!\n\nYour Google Apps Script isn't properly configured for web access.\n\nCheck TROUBLESHOOTING_NO_DATA.md for fix instructions.`);
-          return;
-        }
-
-        throw getError;
-      }
-
-      // Test 2: POST request with test data
-      console.log('Test 2: POST request with test data...');
-      const testData = {
-        timestamp: new Date().toISOString(),
-        submissionId: `test_${Date.now()}`,
-        name: 'Test User',
-        email: 'test@example.com',
-        phone: '123-456-7890',
-        service: 'Test Service',
-        message: 'This is a diagnostic test'
-      };
-
-      const postResponse = await fetch(googleSheetsUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain'
-        },
-        body: JSON.stringify(testData),
-        mode: 'cors'
-      });
-
-      console.log('POST Response Status:', postResponse.status);
-      const postText = await postResponse.text();
-      console.log('POST Response:', postText);
-
-      // Test 3: GET with parameters
-      console.log('Test 3: GET with parameters...');
-      const params = new URLSearchParams({
-        ...testData,
-        submissionId: `test_params_${Date.now()}`
-      });
-
-      const paramResponse = await fetch(`${googleSheetsUrl}?${params.toString()}`, {
-        mode: 'cors'
-      });
-
-      console.log('GET Params Response Status:', paramResponse.status);
-      const paramText = await paramResponse.text();
-      console.log('GET Params Response:', paramText);
-
-      alert('✅ Diagnostic test completed!\n\nCheck the browser console for detailed results and your Google Sheet for test entries.\n\nIf you see errors in the console, check TROUBLESHOOTING_NO_DATA.md for solutions.');
-
-    } catch (error) {
-      console.error('❌ Diagnostic test failed:', error);
-
-      let errorMessage = '❌ Diagnostic test failed!\n\n';
-
-      if (error.message.includes('Failed to fetch')) {
-        errorMessage += 'Connection Error: Cannot reach Google Apps Script.\n\n';
-        errorMessage += 'Common causes:\n';
-        errorMessage += '• Wrong script URL in .env file\n';
-        errorMessage += '• Script not deployed as web app\n';
-        errorMessage += '• Script permissions not set to "Anyone"\n\n';
-        errorMessage += 'Check TROUBLESHOOTING_NO_DATA.md for detailed fix instructions.';
-      } else if (error.message.includes('NetworkError')) {
-        errorMessage += 'Network Error: Check your internet connection.';
-      } else {
-        errorMessage += `Error: ${error.message}\n\n`;
-        errorMessage += 'Check the browser console for more details.';
-      }
-
-      alert(errorMessage);
     }
   };
 
