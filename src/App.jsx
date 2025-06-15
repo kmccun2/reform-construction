@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 import { textContent } from './utils/text-content.js';
-import { 
-  sendToGoogleSheets, 
+import {
+  sendToGoogleSheets,
   isGoogleSheetsConfigured,
   sendToGoogleSheetsViaIframe,
   sendToGoogleSheetsCorsFree,
@@ -25,7 +25,8 @@ import {
 import { GiConcreteBag, GiHammerNails, GiHouse, GiBrickWall } from 'react-icons/gi';
 import { MdOutdoorGrill, MdHomeRepairService } from 'react-icons/md';
 
-function App() {  const [formData, setFormData] = useState({
+function App() {
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
@@ -86,7 +87,7 @@ function App() {  const [formData, setFormData] = useState({
     if (!formData.service) newErrors.service = "Please select a service";
     if (!formData.message.trim()) newErrors.message = "Message is required";
     return newErrors;
-  };  const handleSubmit = async (e) => {
+  }; const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
 
@@ -108,7 +109,7 @@ function App() {  const [formData, setFormData] = useState({
         // Send data to Google Sheets if configured
         if (isGoogleSheetsConfigured()) {
           console.log('📝 Submitting form data to Google Sheets...');
-          
+
           // Add submission ID to form data to help track duplicates
           const formDataWithId = {
             ...formData,
@@ -118,7 +119,7 @@ function App() {  const [formData, setFormData] = useState({
 
           const result = await sendToGoogleSheets(formDataWithId);
           console.log('✅ Form submitted successfully:', result);
-          
+
         } else {
           console.warn('Google Sheets integration not configured. Check your .env file.');
           console.log('Form data:', formData);
@@ -139,13 +140,13 @@ function App() {  const [formData, setFormData] = useState({
             message: ''
           });
         }, 3000);
-        
+
       } catch (error) {
         console.error('Error submitting form:', error);
 
         // Provide user-friendly error message
         let errorMessage = 'There was an error submitting your form. ';
-        
+
         if (error.message.includes('Network error') || error.message.includes('Unable to reach')) {
           errorMessage += 'Please check your internet connection and try again. ';
         } else if (error.message.includes('timed out')) {
@@ -158,7 +159,7 @@ function App() {  const [formData, setFormData] = useState({
 
         errorMessage += 'contact us directly at andrew@rcrla.com or brennyn@rcrla.com.';
         alert(errorMessage);
-        
+
       } finally {
         setIsSubmitting(false);
         setSubmissionComplete(false);
@@ -421,14 +422,19 @@ function App() {  const [formData, setFormData] = useState({
                   <div key={index} className="owner-card">
                     <h3>{owner.name}</h3>
                     <p className="owner-title">{owner.title}</p>
-                    <div className="owner-details">
-                      <div className="contact-item">
-                        <FaPhone className="contact-icon" />
-                        <strong>Phone:</strong> <span>{owner.phone}</span>
+                    <div className="owner-details">                      <div className="contact-item">
+                      <FaPhone className="contact-icon" />
+                      <div className="contact-details">
+                        <strong>Phone</strong>
+                        <span>{owner.phone}</span>
                       </div>
+                    </div>
                       <div className="contact-item">
                         <FaEnvelope className="contact-icon" />
-                        <strong>Email:</strong> <span>{owner.email}</span>
+                        <div className="contact-details">
+                          <strong>Email</strong>
+                          <span>{owner.email}</span>
+                        </div>
                       </div>
                     </div>
                   </div>

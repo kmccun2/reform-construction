@@ -1,0 +1,26 @@
+# DigitalOcean App Platform Configuration
+name: reform-construction
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: your-username/reform-construction
+    branch: main
+  run_command: npm run build
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 8080
+  routes:
+  - path: /
+  static_sites:
+  - name: frontend
+    source_dir: /
+    github:
+      repo: your-username/reform-construction
+      branch: main
+    build_command: npm run build
+    output_dir: /dist
+    environment_slug: node-js
+    routes:
+    - path: /

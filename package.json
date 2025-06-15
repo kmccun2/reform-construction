@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:build": "npm run build && powershell Compress-Archive -Path 'dist\\*' -DestinationPath 'reform-construction-deploy.zip' -Force",
+    "deploy:docker": "docker build -t reform-construction . && docker tag reform-construction your-registry/reform-construction"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

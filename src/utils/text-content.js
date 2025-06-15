@@ -1,6 +1,6 @@
 export const textContent = {
     company: {
-        name: "Reform Construction",
+        name: "Reform Construction & Restoration",
         tagline: "Building Excellence, One Project at a Time",
         mission: "To provide exceptional construction services with uncompromising quality, reliability, and customer satisfaction."
     },
