@@ -7,7 +7,7 @@ static_sites:
       repo: your-username/reform-construction
       branch: main
       deploy_on_push: true
-    build_command: npm install --include=dev && npx vite build
+    build_command: npm install && npx vite build
     output_dir: /dist
     environment_slug: node-js
     instance_count: 1
