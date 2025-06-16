@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { textContent } from './utils/text-content.js';
 import {
@@ -29,12 +29,13 @@ function App() {
     phone: '',
     service: '',
     message: ''
-  });
-  const [errors, setErrors] = useState({});
+  }); const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false); const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionComplete, setSubmissionComplete] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [submissionId, setSubmissionId] = useState(null);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   // Smooth scroll function that accounts for header height
   const scrollToSection = (sectionId) => {
@@ -166,9 +167,58 @@ function App() {
     }
   };
 
+  // Handle header visibility on scroll for mobile devices
+  useEffect(() => {
+    const controlNavbar = () => {
+      // Only apply on mobile devices (screen width <= 768px)
+      if (window.innerWidth <= 768) {
+        const currentScrollY = window.scrollY;
+        const scrollThreshold = 50; // Minimum scroll distance before hiding header
+
+        if (currentScrollY < scrollThreshold) {
+          // Always show header when near top
+          setHeaderVisible(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+          // Scrolling down - hide header
+          setHeaderVisible(false);
+        } else if (currentScrollY < lastScrollY) {
+          // Scrolling up - show header
+          setHeaderVisible(true);
+        }
+
+        setLastScrollY(currentScrollY);
+      } else {
+        // Always show header on desktop
+        setHeaderVisible(true);
+      }
+    };
+
+    // Throttle scroll events for better performance
+    let timeoutId = null;
+    const throttledControlNavbar = () => {
+      if (timeoutId === null) {
+        timeoutId = setTimeout(() => {
+          controlNavbar();
+          timeoutId = null;
+        }, 10);
+      }
+    };
+
+    window.addEventListener('scroll', throttledControlNavbar);
+    window.addEventListener('resize', controlNavbar); // Re-check on window resize
+
+    return () => {
+      window.removeEventListener('scroll', throttledControlNavbar);
+      window.removeEventListener('resize', controlNavbar);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [lastScrollY]);
+
   return (
     <div className="app">
-      {/* Header */}      <header className="header">
+      {/* Header */}      <header className={`header ${headerVisible ? 'header-visible' : 'header-hidden'}`}>
         <nav className="nav">
           <div className="nav-brand">
             <img src={rcLogo} alt="Reform Construction Logo" className="nav-logo" />
