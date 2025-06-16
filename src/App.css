@@ -93,6 +93,7 @@ body {
 }
 
 .nav {
+  height: 55px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -102,19 +103,20 @@ body {
 }
 
 .nav-brand {
+  height: 100%;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
 .nav-logo {
-  height: 50px;
+  height: 40px;
   width: auto;
   object-fit: contain;
 }
 
 .nav-brand h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
 }
@@ -126,8 +128,9 @@ body {
 }
 
 .nav-links {
+  height: 100%;
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .nav-links a {
@@ -136,7 +139,8 @@ body {
   text-decoration: none;
   color: var(--color-white);
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.54em 1rem .54rem 1rem;
+  height: 100%;
   border-radius: 5px;
   transition: all 0.3s ease;
 }
@@ -152,7 +156,6 @@ body {
     url('./assets/images/home-bg.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   min-height: 90vh;
   display: flex;
   align-items: center;
@@ -206,7 +209,7 @@ body {
 
 /* Services Section */
 .services {
-  padding: 5rem 1rem;
+  padding: 4rem 1rem 5rem 1rem;
   background: var(--color-bg-light);
 }
 
@@ -271,7 +274,7 @@ body {
 
 /* About Section */
 .about {
-  padding: 5rem 1rem;
+  padding: 4rem 1rem 5rem 1rem;
   background: var(--color-bg-white);
 }
 
@@ -670,7 +673,8 @@ body {
   text-decoration: none;
   color: var(--color-white);
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.54em 1rem .54rem 1rem;
+  ;
   border-radius: 5px;
   transition: all 0.3s ease;
 }
@@ -692,10 +696,26 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 900px) {
+  .nav h1 {
+    font-size: 1.3rem;
+  }
+
+  .nav-links {
+    gap: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .nav {
+    margin-top: 1rem;
+    height: 80px;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .header {
+    height: 12rem;
   }
 
   .nav-brand {
@@ -775,6 +795,7 @@ body {
   .container {
     padding: 0 15px;
   }
+
 
   .nav-brand {
     flex-direction: column;
