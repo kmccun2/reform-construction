@@ -435,21 +435,24 @@ function App() {
                 {textContent.contact.owners.map((owner, index) => (
                   <div key={index} className="owner-card">
                     <h3>{owner.name}</h3>
-                    <p className="owner-title">{owner.title}</p>
-                    <div className="owner-details">                      <div className="contact-item">
-                      <FaPhone className="contact-icon" />
-                      <div className="contact-details">
-                        <strong>Phone</strong>
-                        <span>{owner.phone}</span>
-                      </div>
-                    </div>
-                      <div className="contact-item">
-                        <FaEnvelope className="contact-icon" />
-                        <div className="contact-details">
-                          <strong>Email</strong>
-                          <span>{owner.email}</span>
+                    <p className="owner-title">{owner.title}</p>                    <div className="owner-details">
+                      <a href={`tel:${owner.phone}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <div className="contact-item">
+                          <FaPhone className="contact-icon" />
+                          <div className="contact-details">
+                            <strong>Phone</strong>
+                            <span>{owner.phone}</span>
+                          </div>
+                        </div>                      </a>
+                      <a href={`mailto:${owner.email}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <div className="contact-item">
+                          <FaEnvelope className="contact-icon" />
+                          <div className="contact-details">
+                            <strong>Email</strong>
+                            <span>{owner.email}</span>
+                          </div>
                         </div>
-                      </div>
+                      </a>
                     </div>
                   </div>
                 ))}
