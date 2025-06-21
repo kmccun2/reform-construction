@@ -71,7 +71,7 @@ body {
 
 /* Header and Navigation */
 .header {
-  background: var(--gradient-primary);
+  background: var(--color-primary);
   color: var(--color-text-light);
   padding: 1rem 0;
   position: sticky;
@@ -199,7 +199,7 @@ body {
 
 /* Services Section */
 .services {
-  padding: 4rem 1rem 5rem 1rem;
+  padding: 5rem 1rem 5rem 1rem;
 }
 
 .services h2 {
@@ -263,7 +263,7 @@ body {
 
 /* About Section */
 .about {
-  padding: 4rem 1rem 5rem 1rem;
+  padding: 5rem 1rem 5rem 1rem;
 }
 
 .about h2 {

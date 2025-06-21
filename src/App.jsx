@@ -44,7 +44,7 @@ function App() {
 
     if (element && header) {
       const headerHeight = header.offsetHeight;
-      const elementPosition = element.offsetTop - headerHeight + 50; // Add 50px offset for better visibility
+      const elementPosition = element.offsetTop; // Add 50px offset for better visibility
       window.scrollTo({
         top: elementPosition,
         behavior: 'smooth'
