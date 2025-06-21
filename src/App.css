@@ -530,6 +530,40 @@ body {
   border-color: var(--color-error);
 }
 
+/* Safari iOS specific fixes for select elements */
+.form-group select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23ebebeb' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 0.65rem auto;
+  padding-right: 2.5rem;
+  min-height: 44px;
+  /* iOS minimum touch target */
+  line-height: 1.5;
+}
+
+/* Safari iOS select text sizing */
+@supports (-webkit-touch-callout: none) {
+  .form-group select {
+    font-size: 16px;
+    /* Prevents zoom on iOS Safari */
+    min-height: 48px;
+    padding: 1rem 2.5rem 1rem 0.875rem;
+  }
+}
+
+/* Additional iOS Safari fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .form-group select {
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 44px;
+  }
+}
+
 .error-text {
   color: var(--color-error);
   font-size: 0.875rem;
