@@ -5,7 +5,7 @@ import {
   sendToGoogleSheets,
   isGoogleSheetsConfigured
 } from './utils/googleSheets.js';
-import rcLogo from './assets/images/rc-logo.png';
+import rcLogo from './assets/images/logo-blue-white_512x512.png';
 import {
   FaTools,
   FaPhone,
@@ -44,8 +44,7 @@ function App() {
 
     if (element && header) {
       const headerHeight = header.offsetHeight;
-      const elementPosition = element.offsetTop - headerHeight; // 20px extra padding
-
+      const elementPosition = element.offsetTop - headerHeight + 50; // Add 50px offset for better visibility
       window.scrollTo({
         top: elementPosition,
         behavior: 'smooth'
@@ -235,7 +234,9 @@ function App() {
             </a>
           </div>
         </nav>
-      </header>      {/* Hero Section */}
+      </header>
+
+      {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
           <h2>{textContent.hero.title}</h2>
@@ -279,7 +280,6 @@ function App() {
                 default:
                   IconComponent = FaTools;
               }
-
               return (
                 <div key={index} className="service-card">
                   <div className="service-icon">
@@ -346,6 +346,90 @@ function App() {
         <div className="container">
           <h2>{textContent.contact.title}</h2>
           <div className="contact-content">
+            {/* Contact form */}
+            <form className="contact-form" onSubmit={handleSubmit}>
+              {isSubmitted ? (
+                <div className="success-message">
+                  <h3>Thank You!</h3>
+                  <p>Your message has been sent successfully. We'll get back to you soon.</p>
+                </div>
+              ) : (
+                <>
+                  <h3 className='form-title'>{textContent.contact.form.title}</h3>
+                  <div className="form-group">
+                    <label htmlFor="name">{textContent.contact.form.fields.name}</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className={errors.name ? 'error' : ''}
+                    />
+                    {errors.name && <span className="error-text">{errors.name}</span>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email">{textContent.contact.form.fields.email}</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={errors.email ? 'error' : ''}
+                    />
+                    {errors.email && <span className="error-text">{errors.email}</span>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="phone">{textContent.contact.form.fields.phone}</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className={errors.phone ? 'error' : ''}
+                    />
+                    {errors.phone && <span className="error-text">{errors.phone}</span>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="service">{textContent.contact.form.fields.service}</label>
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      className={errors.service ? 'error' : ''}
+                    >
+                      <option value="">Select a service...</option>
+                      {textContent.contact.form.services.map((service, index) => (
+                        <option key={index} value={service}>{service}</option>
+                      ))}
+                    </select>
+                    {errors.service && <span className="error-text">{errors.service}</span>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="message">{textContent.contact.form.fields.message}</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows="5"
+                      className={errors.message ? 'error' : ''}
+                    ></textarea>
+                    {errors.message && <span className="error-text">{errors.message}</span>}
+                  </div>                  <button
+                    type="submit"
+                    className="submit-button"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Submitting...' : textContent.contact.form.submitButton}
+                  </button>
+                </>
+              )}
+            </form>
+            {/* Owner cards */}
             <div className="contact-info">
               <div className="owners-info">
                 {textContent.contact.owners.map((owner, index) => (
@@ -372,93 +456,7 @@ function App() {
               </div>
             </div>
 
-            <form className="contact-form" onSubmit={handleSubmit}>
-              {isSubmitted ? (
-                <div className="success-message">
-                  <h3>Thank You!</h3>
-                  <p>Your message has been sent successfully. We'll get back to you soon.</p>
-                </div>
-              ) : (
-                <>
-                  <h3 className='form-title'>{textContent.contact.form.title}</h3>
 
-                  <div className="form-group">
-                    <label htmlFor="name">{textContent.contact.form.fields.name}</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className={errors.name ? 'error' : ''}
-                    />
-                    {errors.name && <span className="error-text">{errors.name}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="email">{textContent.contact.form.fields.email}</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={errors.email ? 'error' : ''}
-                    />
-                    {errors.email && <span className="error-text">{errors.email}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="phone">{textContent.contact.form.fields.phone}</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={errors.phone ? 'error' : ''}
-                    />
-                    {errors.phone && <span className="error-text">{errors.phone}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="service">{textContent.contact.form.fields.service}</label>
-                    <select
-                      id="service"
-                      name="service"
-                      value={formData.service}
-                      onChange={handleInputChange}
-                      className={errors.service ? 'error' : ''}
-                    >
-                      <option value="">Select a service...</option>
-                      {textContent.contact.form.services.map((service, index) => (
-                        <option key={index} value={service}>{service}</option>
-                      ))}
-                    </select>
-                    {errors.service && <span className="error-text">{errors.service}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="message">{textContent.contact.form.fields.message}</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      rows="5"
-                      className={errors.message ? 'error' : ''}
-                    ></textarea>
-                    {errors.message && <span className="error-text">{errors.message}</span>}
-                  </div>                  <button
-                    type="submit"
-                    className="submit-button"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? 'Submitting...' : textContent.contact.form.submitButton}
-                  </button>
-                </>
-              )}
-            </form>
           </div>
         </div>
       </section>
