@@ -449,11 +449,6 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.owner-card:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
 .owner-card h5 {
   font-size: 1.3rem;
   color: var(--color-text-light);
