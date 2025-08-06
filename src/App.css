@@ -35,8 +35,15 @@
   --color-shadow-hover: rgba(0, 0, 0, 0.15);
 
   /* Simplified Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-  --gradient-hero: linear-gradient(var(--color-overlay-dark), var(--color-overlay-light));
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-light) 100%
+  );
+  --gradient-hero: linear-gradient(
+    var(--color-overlay-dark),
+    var(--color-overlay-light)
+  );
 }
 
 /* Reset and base styles */
@@ -51,7 +58,7 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: var(--color-text-primary);
   background: var(--color-primary);
@@ -128,7 +135,7 @@ body {
   text-decoration: none;
   color: var(--color-text-light);
   font-weight: 500;
-  padding: 0.54em 1rem .54rem 1rem;
+  padding: 0.54em 1rem 0.54rem 1rem;
   height: 100%;
   border-radius: 5px;
   transition: all 0.3s ease;
@@ -142,8 +149,7 @@ body {
 
 /* Hero Section */
 .hero {
-  background: var(--gradient-hero),
-    url('./assets/images/home-bg.jpg');
+  background: var(--gradient-hero), url("./assets/images/home-bg.jpg");
   background-size: cover;
   background-position: center;
   min-height: 90vh;
@@ -288,14 +294,23 @@ body {
 
 .about-features {
   margin-top: 3rem;
-  display: grid;
-  gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .feature {
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+  width: 300px;
+
+  &.left {
+    margin-left: calc(50% - 300px);
+  }
+  &.right {
+    margin-right: calc(50% - 350px);
+  }
 }
 
 .feature-icon {
@@ -364,7 +379,7 @@ body {
 }
 
 .contact-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -693,8 +708,7 @@ body {
   text-decoration: none;
   color: var(--color-white);
   font-weight: 500;
-  padding: 0.54em 1rem .54rem 1rem;
-  ;
+  padding: 0.54em 1rem 0.54rem 1rem;
   border-radius: 5px;
   transition: all 0.3s ease;
 }
@@ -784,6 +798,26 @@ body {
     min-height: 70vh;
   }
 
+  .about-features {
+    margin-top: 60px;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .feature {
+      width: fit-content;
+
+      margin: 0.5rem 0;
+      &.left {
+        margin-left: 0;
+      }
+      &.right {
+        margin-right: 0;
+      }
+    }
+  }
+
   .hero-content h2,
   .services h2,
   .about h2,
@@ -842,7 +876,6 @@ body {
   .container {
     padding: 0 15px;
   }
-
 
   .nav-brand {
     flex-direction: column;

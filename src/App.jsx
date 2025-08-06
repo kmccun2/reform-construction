@@ -330,7 +330,7 @@ function App() {
                 }
 
                 return (
-                  <div key={index} className="feature">
+                  <div key={index} className={`feature ${index % 2 === 0 ? 'left' : 'right'}`}>
                     <IconComponent className="feature-icon" />
                     <span>{feature}</span>
                   </div>
